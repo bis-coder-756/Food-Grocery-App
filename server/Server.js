@@ -20,10 +20,7 @@ const PORT = process.env.PORT || 4000;
 
 await connectDB();
 await connectCloudinary();
-
-
-// Allow multiple origins
-// const allowedOrigins = ['http://localhost:5173',process.env.CLIENT_URL]
+app.use(cors({origin : process.env.CLIENT_URL , credentials : true}))
 
 // stripe webhook 
 app.post('/stripe', express.raw({type: "application/json"}),stripeWebhooks )
@@ -32,13 +29,6 @@ app.use(express.json());
 app.use(express.urlencoded())
 app.use(cookieParser());
 // app.use(cors({origin : allowedOrigins , credentials : true}))
-app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        process.env.CLIENT_URL
-    ],
-    credentials: true
-}));
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
