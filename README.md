@@ -75,33 +75,6 @@ groceryhub/
 ```
 
 ---
-
-## ⚙️ Environment Variables
-
-### Backend (.env)
-
-```env
-PORT=5000
-
-MONGODB_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_jwt_secret
-
-STRIPE_SECRET_KEY=your_stripe_secret_key
-
-CLIENT_URL=http://localhost:5173
-```
-
-### Frontend (.env)
-
-```env
-VITE_API_URL=http://localhost:5000
-
-VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-```
-
----
-
 ## 📦 Installation
 
 ### 1. Clone Repository
