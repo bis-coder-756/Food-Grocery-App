@@ -106,8 +106,8 @@ export const placeOrderStripe = async (req, res) => {
             line_items: lineItems,
             mode: "payment",
             // in this url we have to add the success url which we will get from req header
-            success_url: `${origin}/loader?next=my-orders`,
-            cancel_url: `${origin}/cart`,
+            success_url: `${origin}/loader?next=payment-success`,
+            cancel_url: `${origin}/payment-cancel`,
             // so whenever the payment will be cancel user will be redirect to the cart page
 
             // next we provide some metadata
@@ -124,67 +124,7 @@ export const placeOrderStripe = async (req, res) => {
         return res.json({ success: "false", message: error.message })
     }
 }
-//      STRIPE WEBHOOKs to verify payments action :    /stripe
-// export const stripeWebhooks = async (req, res) => {
-//       const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-//       const sig = req.headers["stripe-signature"];
-//       let event;
-
-//       try {
-//         event = stripeInstance.webhooks.constructEvent(
-//             req.body,
-//             sig,
-//             process.env.STRIPE_WEBHOOKS_SECRET
-//         );
-
-//       } catch (error) {
-//         res.status(400).send(`Webhook Error: ${error.message}`)
-//       }
-// // so in this function we have to handle this event 
-//     //   HANDLE THE EVENT
-//     // we have basically 2 events while setting up the webhooks in  stripe account "payment_intent.succeeded" , 
-//     switch (event.type) {
-//         case checkout.session.completed: {
-//             const paymentIntent = event.data.object;
-//             // from this payment intent we will find the id  so add
-//             const paymentIntentId = paymentIntent.id;
-
-//             // getting session metadata
-//             const session = await stripeInstance.checkout.sessions.list({
-//             payment_intent : paymentIntentId,
-//             })
-//             // so we will get session for this payment intent Id . now from this session we will go to metadata and from the metadata we will find the orderId & userId
-//             const { orderId ,userId } =session.data[0].metadata;
-//             // update the isPaid status in order model 
-//             // mark payment as paid
-//            await Order.findByIdAndUpdate(orderId, {isPaid: true})
-//         //    after that we have to clear the cart data for this user
-//      await User.findByIdAndUpdate(userId, {cartItems : {}});
-//      break;
-
-//         }
-//             case "payment_intent.payment_failed" : {
-//                 const paymentIntent = event.data.object;
-//             // from this payment intent we will find the id  so add
-//             const paymentIntentId = paymentIntent.id;
-
-//             // getting session metadata
-//             const session = await stripeInstance.checkout.sessions.list({
-//             payment_intent : paymentIntentId,
-//             })
-//             // so we will get session for this payment intent Id . now from this session we will go to metadata and from the metadata we will find the orderId & userId
-//             const { orderId } =session.data[0].metadata;
-//             await Order.findByIdAndDelete(orderId)
-//             break;
-//             }
-
-//         default: 
-//         console.error(`Unhandled event type ${event.type}`)
-//             break;
-//     }
-//     res.json({ received : true });
-// }
 export const stripeWebhooks = async (req, res) => {
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
