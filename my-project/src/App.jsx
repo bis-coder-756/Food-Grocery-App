@@ -21,6 +21,9 @@ import Orders from './pages/Sellersection/Orders';
 import Contactus from './pages/Contactus';
 import SellerProtectedRoute from './Routes/SellerProtectedRoute';
 import Loading from './components/Loading';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
+
 
 
 function App() {
@@ -47,6 +50,8 @@ function App() {
           <Route path='/add-dddress' element={<Addaddress />} />
           <Route path='/my-orders' element={<Myorders />} />
           <Route path='/loader' element={<Loading />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancel" element={<PaymentCancel />} />
           {/* // we write seller in <Route>..</Route> because we wnat to nested routes in it
           If you write it with open & close tags, it’s usually for nested routes:  means now its every child route will be start /seller/_______     */}
 
